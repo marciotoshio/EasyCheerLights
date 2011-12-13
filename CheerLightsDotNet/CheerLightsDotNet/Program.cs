@@ -10,11 +10,16 @@ namespace CheerLightsDotNet
 {
     class Program
     {
+        static SerialPort serial;
         static void Main(string[] args)
         {
             var delay = 20000;
+            var portName = "COM3";
+            var boudRate = 9600;
 
             Welcome();
+
+            ConnectSerial(portName, boudRate);
 
             while (true)
             {
@@ -23,20 +28,12 @@ namespace CheerLightsDotNet
 
                 Console.WriteLine(DateTime.Now + " :: " + colorstring);
 
+                SendColor(colorrgb);
+
                 Sleep(delay);
 
                 Console.WriteLine();
                 Console.WriteLine("--------------------------------");
-            }
-        }
-
-        private static void Sleep(int delay)
-        {
-            for (var i = delay / 1000; i > 0; i--)
-            {
-                Console.CursorLeft = 0;
-                Console.Write("Waiting " + i + "s");
-                System.Threading.Thread.Sleep(1000);
             }
         }
 
@@ -86,6 +83,27 @@ namespace CheerLightsDotNet
                 default:
                     return "";
             }
+        }
+
+        private static void Sleep(int delay)
+        {
+            for (var i = delay / 1000; i > 0; i--)
+            {
+                Console.CursorLeft = 0;
+                Console.Write("Waiting " + i + "s");
+                System.Threading.Thread.Sleep(1000);
+            }
+        }
+
+        private static void ConnectSerial(string portName, int boudRate)
+        {
+            serial = new SerialPort(portName, boudRate);
+            serial.Open();
+        }
+
+        private static void SendColor(string colorrgb)
+        {
+            serial.WriteLine(colorrgb);
         }
     }
 }
