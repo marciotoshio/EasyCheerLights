@@ -13,11 +13,22 @@ void loop()
   if (Serial.available()) {
     getColor();
     defineColorValues();
-    Serial.println("color received");
-    Serial.println("red:" + red + ' - green:' + green + ' - blue:' + blue);
+    debugMessage();
+    colorString = "";
   }else {
     waitWithAMessage("Waiting color");
   }
+}
+
+void debugMessage() {
+  Serial.println("color received: " + colorString);
+  String result = "red:";
+  result += red;
+  result += "green:";
+  result += green;
+  result += "blue:";
+  result += blue;
+  Serial.println(result);
 }
 
 void waitConnection() {
@@ -42,6 +53,6 @@ void defineColorValues() {
 void waitWithAMessage(String message) {
   while (Serial.available() <= 0) {
     Serial.println(message);
-    delay(300);
+    delay(1000);
   }
 }
