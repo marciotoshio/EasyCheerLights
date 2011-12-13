@@ -1,0 +1,15 @@
+bin
+obj
+*.pdb
+*.user
+*.suo
+*.log
+*.sdf
+*.Publish.xml
+*.testsettings
+.goutputstream*
+log.txt
+Thumbs.db
+TestResults
+Deploy
+_ReSharper*
