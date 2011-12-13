@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using System.IO;
+using System.IO.Ports;
 
 namespace CheerLightsDotNet
 {
@@ -12,13 +13,15 @@ namespace CheerLightsDotNet
         static void Main(string[] args)
         {
             var delay = 20000;
+
             Welcome();
 
             while (true)
             {
-                var color = GetColor();
+                var colorstring = GetColor();
+                var colorrgb = Convert(colorstring);
 
-                Console.WriteLine(DateTime.Now + " :: " + color);
+                Console.WriteLine(DateTime.Now + " :: " + colorstring);
 
                 Sleep(delay);
 
@@ -51,6 +54,38 @@ namespace CheerLightsDotNet
             var response = request.GetResponse();
             var colorstring = new StreamReader(response.GetResponseStream()).ReadToEnd();
             return colorstring;
+        }
+
+        private static string Convert(string colorstring)
+        {
+            /*
+             List of colors from http://www.cheerlights.com/control-cheerlights
+             */
+            switch (colorstring)
+            {
+                case "red":
+                    return "255,0,0";
+                case "green":
+                    return "0,255,0";
+                case "blue":
+                    return "0,0,255";
+                case "cyan":
+                    return "0,255,255";
+                case "white":
+                    return "255,255,255";
+                case "warmwhite":
+                    return "253,245,230";
+                case "purple":
+                    return "128,0,128";
+                case "magenta":
+                    return "255,0,255";
+                case "yellow":
+                    return "255,255,0";
+                case "orange":
+                    return "255,165,0";
+                default:
+                    return "";
+            }
         }
     }
 }
