@@ -2,6 +2,9 @@ String colorString = "";
 String red = "";
 String green = "";
 String blue = "";
+int RED_PIN = 9;
+int GREEN_PIN = 10;
+int BLUE_PIN = 11;
 
 void setup(){
   Serial.begin(9600);
@@ -14,10 +17,21 @@ void loop()
     getColor();
     defineColorValues();
     debugMessage();
+    analogWrite(RED_PIN, red);
+    analogWrite(GREEN_PIN, green);
+    analogWrite(BLUE_PIN, blue);
     colorString = "";
   }else {
     waitWithAMessage("Waiting color");
   }
+}
+
+int toInt(String value) {
+  int n;
+  char carray[3];
+  value.toCharArray(carray, sizeof(carray));
+  n = atoi(carray);
+  return n;
 }
 
 void debugMessage() {
