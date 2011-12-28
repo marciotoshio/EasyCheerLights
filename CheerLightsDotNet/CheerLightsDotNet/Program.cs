@@ -81,7 +81,7 @@ namespace CheerLightsDotNet
                 case "orange":
                     return "255,165,0";
                 default:
-                    return "";
+                    return "0,0,0";
             }
         }
 
