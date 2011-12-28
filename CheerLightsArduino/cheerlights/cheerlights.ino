@@ -2,6 +2,9 @@ String colorString = "";
 String red = "";
 String green = "";
 String blue = "";
+int RED_PIN = 9;
+int GREEN_PIN = 10;
+int BLUE_PIN = 11;
 
 void setup(){
   Serial.begin(9600);
@@ -13,11 +16,33 @@ void loop()
   if (Serial.available()) {
     getColor();
     defineColorValues();
-    Serial.println("color received");
-    Serial.println("red:" + red + ' - green:' + green + ' - blue:' + blue);
+    debugMessage();
+    analogWrite(RED_PIN, red);
+    analogWrite(GREEN_PIN, green);
+    analogWrite(BLUE_PIN, blue);
+    colorString = "";
   }else {
     waitWithAMessage("Waiting color");
   }
+}
+
+int toInt(String value) {
+  int n;
+  char carray[3];
+  value.toCharArray(carray, sizeof(carray));
+  n = atoi(carray);
+  return n;
+}
+
+void debugMessage() {
+  Serial.println("color received: " + colorString);
+  String result = "red:";
+  result += red;
+  result += "green:";
+  result += green;
+  result += "blue:";
+  result += blue;
+  Serial.println(result);
 }
 
 void waitConnection() {
@@ -42,6 +67,6 @@ void defineColorValues() {
 void waitWithAMessage(String message) {
   while (Serial.available() <= 0) {
     Serial.println(message);
-    delay(300);
+    delay(1000);
   }
 }
