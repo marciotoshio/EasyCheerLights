@@ -17,9 +17,9 @@ void loop()
     getColor();
     defineColorValues();
     debugMessage();
-    analogWrite(RED_PIN, red);
-    analogWrite(GREEN_PIN, green);
-    analogWrite(BLUE_PIN, blue);
+    analogWrite(RED_PIN, toInt(red));
+    analogWrite(GREEN_PIN, toInt(green));
+    analogWrite(BLUE_PIN, toInt(blue));
     colorString = "";
   }else {
     waitWithAMessage("Waiting color");
